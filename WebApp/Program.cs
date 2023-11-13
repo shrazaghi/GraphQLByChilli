@@ -1,9 +1,14 @@
 using DataContext;
 using WebApp;
 
+
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddGraphQLServer().
-    AddQueryType<Query>();
+builder.Services.AddMyDbContext();
+
+builder.Services
+    .AddGraphQLServer()
+    .RegisterDbContext<MyDbContext>()
+    .AddQueryType<Query>();
 
 
 var app = builder.Build();
@@ -11,7 +16,7 @@ var app = builder.Build();
 app.MapGet("/", () => "Navigate to: https://localhost:5111/graphql");
 app.MapGet("/employees", () =>
 {
-    MyAppContext context = new MyAppContext();
+    MyDbContext context = new MyDbContext();
     return context.Employees.Take(20);
 });
 app.MapGraphQL();
