@@ -1,0 +1,7 @@
+POST https://localhost:5111/graphql
+Content-Type: application/json
+Content-Length: 10
+
+{
+"query" : "{employee(businessEntityId:8){businessEntityId jobTitle hireDate}}"
+}
